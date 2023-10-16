@@ -13,5 +13,7 @@ It outputs 2 textfiles in the same directory called notFoundList.txt , and found
 The links that did not contain the keyword are stored in notFoundList.txt.
 The links that DID CONTAIN the keyword are stored in foundList.txt.
 
+You can read the text files, or output them for another use.
+
 The terminal interface will also show you the links that did not contain the keyword. 
 
