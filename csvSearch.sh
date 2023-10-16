@@ -24,7 +24,7 @@ echo " "
 echo -e "${YELLOW}Beginning search of $csv_file file for '$key_word'...${RESET}"
 sleep 2
 
-#if user ented CSV file exists
+#if user inputted CSV file exists
 if [ -f "$csv_file" ]; then
     #Find ProjectZomboid CSV file
     cd $(find ~ -name $csv_file | xargs dirname 2>/dev/null)
