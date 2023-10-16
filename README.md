@@ -5,6 +5,8 @@
 
 A simple CSV file searcher that takes a user inputted csv file full of links, takes a user inputted keyword, and then searches those links for the keyword.
 
+**NOTE: Ensure your CSV file is in the same directory as the csvSearch.sh**
+
 Useful in cases of when you need to search for a specific string in a long list of urls that are stored in the csv format. 
 
 It outputs 2 textfiles in the same directory called notFoundList.txt , and foundList.txt.
