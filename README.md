@@ -7,7 +7,7 @@ A simple CSV (comma-separated values) file searcher that takes a user inputted c
 
 **NOTE: Ensure your CSV file is in the same directory as the csvSearch.sh**
 
-Useful in cases of when you need to search for a specific string in a long list of urls that are stored in the csv format. 
+Useful in cases for when you need to search for a specific string in a long list of webpages that are stored in the csv format. 
 
 It outputs 2 textfiles in the same directory called notFoundList.txt , and foundList.txt.
 The links that did not contain the keyword are stored in notFoundList.txt.
