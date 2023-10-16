@@ -15,5 +15,7 @@ The links that DID CONTAIN the keyword are stored in foundList.txt.
 
 You can read the text files, or output them for another use.
 
+![csvComplete](https://github.com/Kclamberth/csvSearcher/assets/127368340/9c8fd466-cf5a-4b23-a670-335f6a45d384)
+
 The terminal interface will also show you the links that did not contain the keyword. 
 
