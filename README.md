@@ -19,3 +19,12 @@ You can read the text files, or output them for another use.
 
 The terminal interface will also show you the links that did not contain the keyword. 
 
+#Installation
+
+1.) wget "https://raw.githubusercontent.com/Kclamberth/csvSearcher/main/csvSearch.sh"
+
+2.) sudo chmod +x csvSearch.sh
+
+3.) put your csv file in same directory that csvSearch.sh is.
+
+4.) ./csvSeach.sh
