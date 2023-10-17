@@ -19,7 +19,7 @@ You can read the text files, or output them for another use.
 
 The terminal interface will also show you the links that did not contain the keyword. 
 
-#Installation
+Installation
 --------------------------------------------------------------------------------------------------------
 1.) wget "https://raw.githubusercontent.com/Kclamberth/csvSearcher/main/csvSearch.sh"
 
