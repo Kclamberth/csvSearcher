@@ -10,9 +10,7 @@ This is a script that takes a CSV file containing URLs, visits each URL, downloa
 Useful in cases for when you need to search for a specific string in a long list of webpages that are stored in the csv format. 
 
 It outputs 2 textfiles in the **same directory** called notFoundList.txt , and foundList.txt.
-
 The links that did not contain the keyword are stored in notFoundList.txt.
-
 The links that DID CONTAIN the keyword are stored in foundList.txt.
 
 You can read the text files, or output them for another use.
