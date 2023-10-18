@@ -17,34 +17,37 @@ RESET='\e[0m'
 #user input
 echo "Please enter the CSV file name (e.g., ProjectZomboidMods.csv):"
 read csv_file
-echo " "
-echo "Please enter the KEYWORD to search for in $csv_file"
-read key_word
-echo " "
-echo -e "${YELLOW}Beginning search of $csv_file file for '$key_word'...${RESET}"
-sleep 2
+csv_directory=$(find ~ -name "$csv_file" | xargs dirname 2>/dev/null | head -1 )
+search_directory=$(find ~ -name "csvSearch.sh" | xargs dirname 2>/dev/null | head -1 )
 
 #if user inputted CSV file exists
-if [ -f "$csv_file" ]; then
+if [ -f "$csv_directory/$csv_file" ]; then
+    echo " "
+    echo "Please enter the KEYWORD to search for in '$csv_file'"
+    read key_word
+    echo " " 
+    echo -e "${YELLOW}Beginning search of '$csv_file' file for '$key_word'...${RESET}"
+    sleep 2
+
     #Find ProjectZomboid CSV file
-    cd $(find ~ -name $csv_file | xargs dirname 2>/dev/null)
+    cd "$csv_directory"
 
     #header
     update_screen
 
     #read csv file & pull links, store in new list
-    cat $csv_file 2>/dev/null | awk -F "https://" '{print $2}'| awk -F "," '{print $1}' > foundList.txt
-    sed -i '/^$/d' foundList.txt && sed -i 's/^/https:\/\//g' foundList.txt
-    linklistcount=$(cat foundList.txt | wc -l)
+    cat "$csv_file" 2>/dev/null | awk -F "https://" '{print $2}'| awk -F "," '{print $1}' > $search_directory/foundList.txt
+    sed -i '/^$/d' $search_directory/foundList.txt && sed -i 's/^/https:\/\//g' $search_directory/foundList.txt
+    linklistcount=$(cat $search_directory/foundList.txt | wc -l)
     
     #Read every link in list
     for ((link = 1; link <="$linklistcount"; link ++)); do
 
         #visit each webpage, download index.html
-        link_url=$(cat foundList.txt | sed -n "${link}p")
+        link_url=$(cat $search_directory/foundList.txt | sed -n "${link}p")
         wget "$link_url" > /dev/null 2>&1
-        if [ -f "notFoundList.txt" ]; then
-            nfcount=$(cat notFoundList.txt | wc -l)
+        if [ -f "$search_directory/notFoundList.txt" ]; then
+            nfcount=$(cat $search_directory/notFoundList.txt | wc -l)
         else
             nfcount=0
         fi
@@ -67,10 +70,10 @@ if [ -f "$csv_file" ]; then
 
                     #if keyword was NOT FOUND     
                     else
-                        sed -i "${link}d" foundList.txt > /dev/null 2>&1
+                        sed -i "${link}d" $search_directory/foundList.txt > /dev/null 2>&1
                         num1=$(expr $link + $nfcount)
                         printf -v padded_link "%03d" "$num1"
-                        echo $link_url >> notFoundList.txt
+                        echo $link_url >> $search_directory/notFoundList.txt
                         echo -e "[$padded_link/$linklistcount] ${RED}[ERROR]${RESET} '$key_word'    $link_url, sending to notFoundList.txt."
                 fi
 
@@ -81,20 +84,20 @@ if [ -f "$csv_file" ]; then
     done
 
     #removes whitespace and newlines from each finished list
-    sed -i 's/^[ \t]*//;s/[ \t]*$//' notFoundList.txt
-    sed -i 's/^[ \t]*//;s/[ \t]*$//' foundList.txt
-    sed -i '/^$/d' notFoundList.txt
-    sed -i '/^$/d' foundList.txt
+    sed -i 's/^[ \t]*//;s/[ \t]*$//' $search_directory/notFoundList.txt
+    sed -i 's/^[ \t]*//;s/[ \t]*$//' $search_directory/foundList.txt
+    sed -i '/^$/d' $search_directory/notFoundList.txt
+    sed -i '/^$/d' $search_directory/foundList.txt
 
     sleep 2
 
     #exit statements
     echo " "
     echo " " 
-    echo "Finished search for '$key_word' in each link of $csv_file"
+    echo "Finished search for '$key_word' in each link of '$csv_file'"
     sleep 2
-    number=$(cat foundList.txt | wc -l)
-    number2=$(cat notFoundList.txt | wc -l)
+    number=$(cat $search_directory/foundList.txt | wc -l)
+    number2=$(cat $search_directory/notFoundList.txt | wc -l)
     printf -v padded_number2 "%03d" "$number2"
     echo " "
     echo -e "${GREEN}[$number]${RESET} links found with '$key_word', stored in foundList.txt"
@@ -103,6 +106,6 @@ if [ -f "$csv_file" ]; then
 #runs only if user inputted csv file name is not found
 else
     echo " "
-    echo "The file $csv_file does NOT exist in this directory."
+    echo "The file '$csv_file' does NOT exist in this directory."
     echo "Ensure you typed it in correctly, or are in the correct directory."
 fi
