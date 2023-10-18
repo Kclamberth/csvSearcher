@@ -5,8 +5,6 @@
 
 This is a script that takes a CSV file containing URLs, visits each URL, downloads its HTML content, searches for a specified keyword, and then produces two lists: one with URLs where the keyword was found and another with URLs where the keyword was not found. The script also provides colorful output to indicate the status of each URL.
 
-**NOTE: Ensure your CSV file is in the same directory as the csvSearch.sh**
-
 Useful in cases for when you need to search for a specific string in a long list of webpages that are stored in the csv format. 
 
 It outputs 2 textfiles in the **same directory** called notFoundList.txt , and foundList.txt.
@@ -25,6 +23,4 @@ Installation
 
 2.) sudo chmod +x csvSearch.sh
 
-3.) put your csv file in same directory that csvSearch.sh is.
-
-4.) ./csvSeach.sh
+3.) ./csvSeach.sh
