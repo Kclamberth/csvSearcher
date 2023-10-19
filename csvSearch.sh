@@ -46,7 +46,7 @@ if [ -f "$csv_directory/$csv_file" ]; then
         #visit each webpage, download index.html
         link_url=$(cat $search_directory/foundList.txt | sed -n "${link}p")
         wget "$link_url" > /dev/null 2>&1
-        if [ -f "$search_directory/notFoundList.txt" ]; then
+        if [ -e "$search_directory/notFoundList.txt" ]; then
             nfcount=$(cat $search_directory/notFoundList.txt | wc -l)
         else
             nfcount=0
@@ -84,10 +84,12 @@ if [ -f "$csv_directory/$csv_file" ]; then
     done
 
     #removes whitespace and newlines from each finished list
-    sed -i 's/^[ \t]*//;s/[ \t]*$//' $search_directory/notFoundList.txt
-    sed -i 's/^[ \t]*//;s/[ \t]*$//' $search_directory/foundList.txt
-    sed -i '/^$/d' $search_directory/notFoundList.txt
-    sed -i '/^$/d' $search_directory/foundList.txt
+    if [ -e "$search_directory/notFoundList.txt" ]; then
+        sed -i 's/^[ \t]*//;s/[ \t]*$//' $search_directory/notFoundList.txt
+        sed -i 's/^[ \t]*//;s/[ \t]*$//' $search_directory/foundList.txt
+        sed -i '/^$/d' $search_directory/notFoundList.txt
+        sed -i '/^$/d' $search_directory/foundList.txt
+    fi
 
     sleep 2
 
@@ -96,12 +98,19 @@ if [ -f "$csv_directory/$csv_file" ]; then
     echo " " 
     echo "Finished search for '$key_word' in each link of '$csv_file'"
     sleep 2
-    number=$(cat $search_directory/foundList.txt | wc -l)
-    number2=$(cat $search_directory/notFoundList.txt | wc -l)
-    printf -v padded_number2 "%03d" "$number2"
-    echo " "
-    echo -e "${GREEN}[$number]${RESET} links found with '$key_word', stored in foundList.txt"
-    echo -e "${RED}[$padded_number2]${RESET} links found with NO MENTION of '$key_word', stored in notFoundList.txt."
+
+    if [ -e "$search_directory/foundList.txt" ]; then
+        number=$(cat $search_directory/foundList.txt | wc -l)
+        echo " "
+        echo -e "${GREEN}[$number]${RESET} links found with '$key_word', stored in foundList.txt"
+
+    fi
+
+    if [ -e "$search_directory/notFoundList.txt" ]; then
+        number2=$(cat $search_directory/notFoundList.txt | wc -l)
+        printf -v padded_number2 "%03d" "$number2"
+        echo -e "${RED}[$padded_number2]${RESET} links found with NO MENTION of '$key_word', stored in notFoundList.txt."
+    fi
 
 #runs only if user inputted csv file name is not found
 else
