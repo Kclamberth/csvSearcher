@@ -86,11 +86,14 @@ if [ -f "$csv_directory/$csv_file" ]; then
     #removes whitespace and newlines from each finished list
     if [ -e "$search_directory/notFoundList.txt" ]; then
         sed -i 's/^[ \t]*//;s/[ \t]*$//' $search_directory/notFoundList.txt
-        sed -i 's/^[ \t]*//;s/[ \t]*$//' $search_directory/foundList.txt
         sed -i '/^$/d' $search_directory/notFoundList.txt
-        sed -i '/^$/d' $search_directory/foundList.txt
     fi
 
+    if [ -e "$search_directory/foundList.txt" ]; then
+        sed -i 's/^[ \t]*//;s/[ \t]*$//' $search_directory/foundList.txt
+        sed -i '/^$/d' $search_directory/foundList.txt
+    fi
+    
     sleep 2
 
     #exit statements
