@@ -17,8 +17,8 @@ RESET='\e[0m'
 #user input
 echo "Please enter the CSV file name (e.g., ProjectZomboidMods.csv):"
 read csv_file
-csv_directory=$(find ~ -name "$csv_file" | xargs dirname 2>/dev/null | head -1 )
-search_directory=$(find ~ -name "csvSearch.sh" | xargs dirname 2>/dev/null | head -1 )
+csv_directory=$(find ~ -name "$csv_file" 2>/dev/null | xargs dirname 2>/dev/null | head -1 )
+search_directory=$(find ~ -name "csvSearch.sh" 2>/dev/null | xargs dirname 2>/dev/null | head -1 )
 
 #if user inputted CSV file exists
 if [ -f "$csv_directory/$csv_file" ]; then
