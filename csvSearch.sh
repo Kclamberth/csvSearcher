@@ -8,7 +8,7 @@ update_screen() {
     echo -e "${YELLOW}Link #    STATUS   Keyword      Link${RESET}"
 }
 
-#colors
+#colors-test
 GREEN='\e[32m'
 RED='\e[31m'
 YELLOW='\e[33m'
